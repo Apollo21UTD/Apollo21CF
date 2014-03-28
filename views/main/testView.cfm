@@ -1,0 +1,4 @@
+<cfoutput>
+
+	#prc.helloWorldMessage#
+</cfoutput>
