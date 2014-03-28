@@ -10,17 +10,18 @@ Description :
 	This is the Application.cfc for usage withing the ColdBox Framework.
 	Make sure that it extends the coldbox object:
 	coldbox.system.Coldbox
-	
+
 	So if you have refactored your framework, make sure it extends coldbox.
 ----------------------------------------------------------------------->
 <cfcomponent output="false">
 	<cfsetting enablecfoutputonly="yes">
 	<!--- APPLICATION CFC PROPERTIES --->
-	<cfset this.name = hash(getCurrentTemplatePath())> 
+	<cfset APP_CLIENT_DATASOURCE = "">
+	<cfset this.name = hash(getCurrentTemplatePath())>
 	<cfset this.sessionManagement = true>
 	<cfset this.sessionTimeout = createTimeSpan(0,0,30,0)>
 	<cfset this.setClientCookies = true>
-	
+
 	<!--- COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP --->
 	<cfset COLDBOX_APP_ROOT_PATH = getDirectoryFromPath(getCurrentTemplatePath())>
 	<!--- The web server mapping to this application. Used for remote purposes or static purposes --->
@@ -29,17 +30,33 @@ Description :
 	<cfset COLDBOX_CONFIG_FILE 	 = "">
 	<!--- COLDBOX APPLICATION KEY OVERRIDE --->
 	<cfset COLDBOX_APP_KEY 		 = "">
-	
+
 	<!--- on Application Start --->
-	<cffunction name="onApplicationStart" returnType="boolean" output="false">
+	<!---<cffunction name="onApplicationStart" returnType="boolean" output="false">
 		<cfscript>
 			//Load ColdBox
 			application.cbBootstrap = CreateObject("component","coldbox.system.Coldbox").init(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH,COLDBOX_APP_KEY,COLDBOX_APP_MAPPING);
 			application.cbBootstrap.loadColdbox();
 			return true;
 		</cfscript>
-	</cffunction>
-	
+	</cffunction>--->
+	<!---<cfscript>
+		// Set up ORM - Note: hibernate version = 3.5.2-Final
+		this.ormenabled = true;
+		this.ormsettings = {
+			datasource = APP_CLIENT_DATASOURCE,
+			// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
+			secondarycacheenabled = false,
+			cacheprovider = "ehCache",
+			cfclocation = ["/model"],
+			flushAtRequestEnd 	= false,
+			autoManageSession	= false,
+			logsql = true,
+			eventHandling = true
+			//eventHandler = "genesis.model.EventHandler"
+		};
+	</cfscript>--->
+
 	<!--- on Request Start --->
 	<cffunction name="onRequestStart" returnType="boolean" output="true">
 		<!--- ************************************************************* --->
@@ -54,10 +71,10 @@ Description :
 		</cfif>
 		<!--- On Request Start via ColdBox --->
 		<cfset application.cbBootstrap.onRequestStart(arguments.targetPage)>
-		
+
 		<cfreturn true>
 	</cffunction>
-	
+
 	<!--- on Application End --->
 	<cffunction name="onApplicationEnd" returnType="void"  output="false">
 		<!--- ************************************************************* --->
@@ -65,12 +82,12 @@ Description :
 		<!--- ************************************************************* --->
 		<cfset arguments.appScope.cbBootstrap.onApplicationEnd(argumentCollection=arguments)>
 	</cffunction>
-	
+
 	<!--- on Session Start --->
-	<cffunction name="onSessionStart" returnType="void" output="false">			
+	<cffunction name="onSessionStart" returnType="void" output="false">
 		<cfset application.cbBootstrap.onSessionStart()>
 	</cffunction>
-	
+
 	<!--- on Session End --->
 	<cffunction name="onSessionEnd" returnType="void" output="false">
 		<!--- ************************************************************* --->
@@ -79,11 +96,11 @@ Description :
 		<!--- ************************************************************* --->
 		<cfset appScope.cbBootstrap.onSessionEnd(argumentCollection=arguments)>
 	</cffunction>
-	
+
 	<!--- OnMissing Template --->
 	<cffunction	name="onMissingTemplate" access="public" returntype="boolean" output="true" hint="I execute when a non-existing CFM page was requested.">
 		<cfargument name="template"	type="string" required="true"	hint="I am the template that the user requested."/>
 		<cfreturn application.cbBootstrap.onMissingTemplate(argumentCollection=arguments)>
 	</cffunction>
-	
+
 </cfcomponent>
