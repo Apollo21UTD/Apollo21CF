@@ -4,7 +4,7 @@ component {
 	{
 		prc.helloWorldMessage = "Hello World";
 
-		event.setView("main/testView");
+		event.setView("testHandler/testView");
 	}
 
 	function testView(event,rc,prc)
