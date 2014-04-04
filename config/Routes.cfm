@@ -9,15 +9,15 @@
 	// setValidExtensions('xml,json,jsont,rss,html,htm');
 	// If enabled, the interceptor will throw a 406 exception that an invalid format was detected or just ignore it
 	// setThrowOnInvalidExtension(true);
-	
+
 	// Base URL
 	if( len(getSetting('AppMapping') ) lte 1){
-		setBaseURL("http://#cgi.HTTP_HOST#/index.cfm");
+		setBaseURL("http://#CGI.HTTP_HOST##getContextRoot()#");
 	}
 	else{
-		setBaseURL("http://#cgi.HTTP_HOST#/#getSetting('AppMapping')#/index.cfm");
+		setBaseURL("http://#CGI.HTTP_HOST##getContextRoot()#/#getSetting('AppMapping')#");
 	}
-	
+
 	// Your Application Routes
 	addRoute(pattern=":handler/:action?");
 </cfscript>

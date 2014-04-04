@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <div class="hero-unit">
-	<img src="includes/images/ColdBoxLogoSquare_125.png" class="pull-left margin10" alt="logo"/>
+	<img src="#event.getModuleRoot()#/includes/images/ColdBoxLogoSquare_125.png" class="pull-left margin10" alt="logo"/>
 	<h1>#prc.welcomeMessage#</h1>
 	<p>
 		You are now running <strong>#getSetting("codename",1)# #getSetting("version",1)# (#getsetting("suffix",1)#)</strong>.
@@ -14,6 +14,39 @@
 
 <div class="row">
 	<div class="span9">
+
+		<section id="eventHandlers">
+			<div class="page-header">
+				<h2>
+					For Starters
+				</h2>
+			</div>
+			<h5>
+				This is the default page of our application as it exists right now. There are many quick links to different bits of documentation for ColdBox (the framework we are using).
+				You may find them useful, or not. But just below here are two links that will help you get the ball rolling in a practical way
+			</h5>
+			<br>
+
+			<p>
+				This is the demo page I have set up. In your eclipse navigator go to <span class="label label-important">Apollo21/modules/explorer/views/demo/</span>
+				and open the file: <span class="label label-important">demo.cfm</span>
+				There are a bunch of nice code examples with some commented explanations that should help you start getting comfortable with Coldfusion.
+				Here's a link to that page:
+			</p>
+			<ul>
+				<li><a href="#event.buildLink("explorer.demo.demo")#">Demo</a></li>
+			</ul>
+			<br>
+
+			<p>
+				I have also created a "play ground" sort of webpage. This is just a place where you can go and test out bits of code, or prove a concept. Really just whatever
+				you want to do with it. Its located at <span class="label label-important">Apollo21/modules/explorer/views/demo/playGround.cfm</span>. Here's a link to take to there:
+			</p>
+			<ul>
+				<li><a href="#event.buildLink("explorer.demo.playGround")#">Pay Ground</a></li>
+			</ul>
+
+		</section>
 
 		<section id="eventHandlers">
 		<div class="page-header">

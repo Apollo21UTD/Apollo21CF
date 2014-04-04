@@ -50,8 +50,6 @@
 		// Module Mappings
 		this.mappings["/explorer"] = COLDBOX_APP_ROOT_PATH & "modules/explorer";
 		this.mappings["/apollo21"]       = COLDBOX_APP_ROOT_PATH & "modules/apollo21";
-		/*this.mappings["/public"]    = COLDBOX_APP_ROOT_PATH & "modules/public";
-		this.mappings["/dev"]    	   = COLDBOX_APP_ROOT_PATH & "modules/dev";*/
 
 		// Set up ORM - Note: hibernate version = 3.5.2-Final
 		/*this.ormenabled = true;

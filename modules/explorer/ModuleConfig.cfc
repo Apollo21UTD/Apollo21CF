@@ -22,6 +22,9 @@ component {
 	*/
 	function configure(){
 
+		// Layout Settings
+		//layoutSettings = { defaultLayout = "Main.cfm" };
+
 		// Module Settings
 		settings = {
 		};
