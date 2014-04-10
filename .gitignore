@@ -1,0 +1,30 @@
+# Railo generated files #
+#########################
+/WEB-INF/railo/cache
+/WEB-INF/railo/cfclasses
+/WEB-INF/railo/classes
+/WEB-INF/railo/client-scope
+/WEB-INF/railo/customtags
+/WEB-INF/railo/debugger
+/WEB-INF/railo/lib
+/WEB-INF/railo/lib-hash
+/WEB-INF/railo/library
+/WEB-INF/railo/logs
+/WEB-INF/railo/remote-client
+/WEB-INF/railo/output
+/WEB-INF/railo/storage
+/WEB-INF/railo/temp
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Eclipse generated files #
+###########################
+/settings.xml
