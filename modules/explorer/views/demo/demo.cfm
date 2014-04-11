@@ -138,7 +138,7 @@
 
 	// We can even access a struct key based on a value inside of a variable
 	structIndex = "anotherStruct";
-	myFirstName = "ben"
+	myFirstName = "ben";
 	myLastName = myFilledStruct[structIndex][myFirstName];
 
 	/************* Advanced ***************/
@@ -150,25 +150,25 @@
 		lastName = "Knox",
 		email = "bxk112430@utdallas.edu",
 		height = "6'9"
-	}
+	};
 	person2 = {
 		firstName = "Clay",
 		lastName = "McAnally",
 		email = "clay@utdallas.edu",
 		height = "short"
-	}
+	};
 	person3 = {
 		firstName = "Stephan",
 		lastName = "Weldon",
 		email = "stephan@utdallas.edu",
 		height = "short"
-	}
+	};
 	person4 = {
 		firstName = "Brian",
 		lastName = "Duckplant",
 		email = "duckplant@utdallas.edu",
 		height = "less short"
-	}
+	};
 
 	personArray = [person2, person3];
 	arrayAppend(personArray, person4);
