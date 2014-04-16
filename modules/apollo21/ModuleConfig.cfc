@@ -40,8 +40,10 @@ component {
 		};
 
 		// Map Bindings - Services should always be called by their mapped names to reduce possible refactoring efforts
-		// Security
-
+		binder.map("PhotoService@apollo21").to("apollo21.model.photo.PhotoService");
+		binder.map("VideoService@apollo21").to("apollo21.model.video.VideoService");
+		binder.map("AudioService@apollo21").to("apollo21.model.audio.AudioService");
+		binder.map("TextService@apollo21").to("apollo21.model.text.TextService");
 
 	}
 

@@ -12,7 +12,7 @@
 		// APPLICATION NAME
 		APP_NAME = "Apollo21"; //getApplicationName(CGI);
 		// APPLICATION CLIENT DATASOURCE
-		//APP_CLIENT_DATASOURCE = "";// getApplicationDatasource(CGI);
+		APP_CLIENT_DATASOURCE = "apollo21DB";// getApplicationDatasource(CGI);
 		/*** Application Properties ***/
 		this.name = APP_NAME;
 		// where should we store client vars, if enabled?
@@ -52,19 +52,19 @@
 		this.mappings["/apollo21"]       = COLDBOX_APP_ROOT_PATH & "modules/apollo21";
 
 		// Set up ORM - Note: hibernate version = 3.5.2-Final
-		/*this.ormenabled = true;
+		this.ormenabled = true;
 		this.ormsettings = {
 			datasource = APP_CLIENT_DATASOURCE,
 			// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
 			secondarycacheenabled = false,
 			cacheprovider = "ehCache",
-			cfclocation = ["/genesis/model"],
+			cfclocation = ["/apollo21/model"],
 			flushAtRequestEnd 	= false,
 			autoManageSession	= false,
 			logsql = true,
-			eventHandling = true,
-			eventHandler = "genesis.model.EventHandler"
-		};*/
+			eventHandling = true
+			//eventHandler = "apollo21.model.EventHandler"
+		};
 
 		/**
 		* Set app name in an MSOC environment
