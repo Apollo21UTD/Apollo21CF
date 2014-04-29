@@ -15,10 +15,10 @@
 <h1>#args.title#</h1>
 
 <!--- Submit Form --->
-#html.startForm(action='explorer.photos.save')#
+#html.startForm(action='explorer.texts.save')#
 
 	<!--- Convert Entity To Fields --->
-	#html.entityFields(entity=rc.Photo,
+	#html.entityFields(entity=rc.text,
 					   fieldWrapper="div class='controls'",
 					   labelWrapper="",
 					   textAreas="",
@@ -29,7 +29,7 @@
 
 	<!--- Submit --->
 	<div class="form-actions">
-	#html.href(href="explorer/photos", text="Cancel", class="btn")#
+	#html.href(href="explorer/texts", text="Cancel", class="btn")#
 	#html.submitButton(value="Save", class="btn btn-primary")#
 	</div>
 

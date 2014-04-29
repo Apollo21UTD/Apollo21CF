@@ -1,0 +1,1 @@
+<cfoutput>#renderView(view="texts/editor",args={title="Update Photo"})#</cfoutput>

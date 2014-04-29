@@ -3,10 +3,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* Constructor
 	*/
-	public TextService function init(){
+	public EventService function init(){
 
 		// init super class
-		super.init(entityName="Text");
+		super.init(entityName="Event");
 
 	    return this;
 	}

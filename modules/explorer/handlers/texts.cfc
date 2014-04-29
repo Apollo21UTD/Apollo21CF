@@ -1,11 +1,11 @@
 /**
-* Manage Photos
+* Manage texts
 * It will be your responsibility to fine tune this template, add validations, try/catch blocks, logging, etc.
 */
 component{
 
 	// DI Virtual Entity Service
-	property name="photoService" inject="PhotoService@apollo21";
+	property name="textService" inject="TextService@apollo21";
 
 	// HTTP Method Security
 	this.allowedMethods = {
@@ -23,19 +23,19 @@ component{
 	* Listing
 	*/
 	function index(event,rc,prc){
-		// Get all Photos
-		rc.Photos = photoService.getAll();
+		// Get all texts
+		rc.texts = textService.getAll();
 
 		// RESTful Switch
 		switch(rc.format){
 			// xml,json,jsont,wddx are by default.  Add your own or remove
 			case "xml" : case "json" : case "jsont" : case "wddx" :{
-				event.renderData(data=rc.Photos,type=rc.format);
+				event.renderData(data=rc.texts,type=rc.format);
 				break;
 			}
 			// HTML
 			default:{
-				event.setView("Photos/index");
+				event.setView("texts/index");
 			}
 		}
 	}
@@ -45,10 +45,10 @@ component{
 	*/
 	function new(event,rc,prc){
 
-		// get new Photo
-		rc.Photo = photoService.new();
+		// get new text
+		rc.text = textService.new();
 
-		event.setView("Photos/new");
+		event.setView("texts/new");
 	}
 
 	/**
@@ -56,29 +56,29 @@ component{
 	*/
 	function edit(event,rc,prc){
 
-		// get persisted Photo
-		rc.Photo = photoService.get( rc.photoID );
+		// get persisted text
+		rc.text = textService.get( rc.textID );
 
-		event.setView("Photos/edit");
+		event.setView("texts/edit");
 	}
 
 	/**
-	* View Photo mostly used for RESTful services only.
+	* View text mostly used for RESTful services only.
 	*/
 	function show(event,rc,prc){
 
 		// Get requested entity by id
-		rc.Photo = photoService.get( rc.photoID );
+		rc.text = textService.get( rc.textID );
 
 		switch(rc.format){
 			// xml,json,jsont,wddx are by default.  Add your own or remove
 			case "xml" : case "json" : case "jsont" : case "wddx" :{
-				event.renderData(data=rc.Photo,type=rc.format);
+				event.renderData(data=rc.text,type=rc.format);
 				break;
 			}
 			// HTML
 			default:{
-				setNextEvent('explorer.photos');
+				setNextEvent('explorer.texts');
 			}
 		}
 	}
@@ -88,27 +88,27 @@ component{
 	*/
 	function save(event,rc,prc){
 
-		// get Photo to persist or update and populate it with incoming form
-		rc.Photo = populateModel(model=photoService.get( rc.photoID ),exclude="photoID");
+		// get text to persist or update and populate it with incoming form
+		rc.text = populateModel(model=textService.get( rc.textID ),exclude="textID");
 
 		// Do your validations here
 
 		// Save it
-		photoService.save( rc.Photo );
+		textService.save( rc.text );
 
 		// RESTful Handler
 		switch(rc.format){
 			// xml,json,jsont,wddx are by default.  Add your own or remove
 			case "xml" : case "json" : case "jsont" : case "wddx" :{
-				event.renderData(data=rc.Photo,type=rc.format,location="/Photos/show/#rc.Photo.getphotoID()#");
+				event.renderData(data=rc.text,type=rc.format,location="/texts/show/#rc.text.gettextID()#");
 				break;
 			}
 			// HTML
 			default:{
 				// Show a nice messagebox
-				getplugin("MessageBox").info("Photo Created!");
+				getplugin("MessageBox").info("text Created!");
 				// Redirect to listing
-				setNextEvent('explorer.photos');
+				setNextEvent('explorer.texts');
 			}
 		}
 	}
@@ -119,7 +119,7 @@ component{
 	function delete(event,rc,prc){
 
 		// Delete record by ID
-		var removed = photoService.deleteById( rc.photoID );
+		var removed = textService.deleteById( rc.textID );
 
 		// RESTful Handler
 		switch(rc.format){
@@ -132,9 +132,9 @@ component{
 			// HTML
 			default:{
 				// Show a nice messagebox
-				getplugin("MessageBox").warn("Photo Poofed!");
+				getplugin("MessageBox").warn("text Poofed!");
 				// Redirect to listing
-				setNextEvent('Photos');
+				setNextEvent('texts');
 			}
 		}
 	}

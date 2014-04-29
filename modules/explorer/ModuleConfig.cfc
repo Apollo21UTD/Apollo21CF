@@ -9,7 +9,7 @@ component {
 	this.title 				= "explorer";
 	this.author 			= "ben knox";
 	this.webURL 			= "";
-	this.description 		= "Contains all of the standard models and ORM entities";
+	this.description 		= "Contains all of the standard UI Components";
 	this.version			= "0.0.1";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;

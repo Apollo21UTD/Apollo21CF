@@ -1,11 +1,11 @@
 /**
-* Manage Photos
+* Manage audios
 * It will be your responsibility to fine tune this template, add validations, try/catch blocks, logging, etc.
 */
 component{
 
 	// DI Virtual Entity Service
-	property name="photoService" inject="PhotoService@apollo21";
+	property name="audioService" inject="AudioService@apollo21";
 
 	// HTTP Method Security
 	this.allowedMethods = {
@@ -23,19 +23,19 @@ component{
 	* Listing
 	*/
 	function index(event,rc,prc){
-		// Get all Photos
-		rc.Photos = photoService.getAll();
+		// Get all audios
+		rc.audios = audioService.getAll();
 
 		// RESTful Switch
 		switch(rc.format){
 			// xml,json,jsont,wddx are by default.  Add your own or remove
 			case "xml" : case "json" : case "jsont" : case "wddx" :{
-				event.renderData(data=rc.Photos,type=rc.format);
+				event.renderData(data=rc.audios,type=rc.format);
 				break;
 			}
 			// HTML
 			default:{
-				event.setView("Photos/index");
+				event.setView("audios/index");
 			}
 		}
 	}
@@ -45,10 +45,10 @@ component{
 	*/
 	function new(event,rc,prc){
 
-		// get new Photo
-		rc.Photo = photoService.new();
+		// get new audio
+		rc.audio = audioService.new();
 
-		event.setView("Photos/new");
+		event.setView("audios/new");
 	}
 
 	/**
@@ -56,29 +56,29 @@ component{
 	*/
 	function edit(event,rc,prc){
 
-		// get persisted Photo
-		rc.Photo = photoService.get( rc.photoID );
+		// get persisted audio
+		rc.audio = audioService.get( rc.audioID );
 
-		event.setView("Photos/edit");
+		event.setView("audios/edit");
 	}
 
 	/**
-	* View Photo mostly used for RESTful services only.
+	* View audio mostly used for RESTful services only.
 	*/
 	function show(event,rc,prc){
 
 		// Get requested entity by id
-		rc.Photo = photoService.get( rc.photoID );
+		rc.audio = audioService.get( rc.audioID );
 
 		switch(rc.format){
 			// xml,json,jsont,wddx are by default.  Add your own or remove
 			case "xml" : case "json" : case "jsont" : case "wddx" :{
-				event.renderData(data=rc.Photo,type=rc.format);
+				event.renderData(data=rc.audio,type=rc.format);
 				break;
 			}
 			// HTML
 			default:{
-				setNextEvent('explorer.photos');
+				setNextEvent('explorer.audios');
 			}
 		}
 	}
@@ -88,27 +88,27 @@ component{
 	*/
 	function save(event,rc,prc){
 
-		// get Photo to persist or update and populate it with incoming form
-		rc.Photo = populateModel(model=photoService.get( rc.photoID ),exclude="photoID");
+		// get audio to persist or update and populate it with incoming form
+		rc.audio = populateModel(model=audioService.get( rc.audioID ),exclude="audioID");
 
 		// Do your validations here
 
 		// Save it
-		photoService.save( rc.Photo );
+		audioService.save( rc.audio );
 
 		// RESTful Handler
 		switch(rc.format){
 			// xml,json,jsont,wddx are by default.  Add your own or remove
 			case "xml" : case "json" : case "jsont" : case "wddx" :{
-				event.renderData(data=rc.Photo,type=rc.format,location="/Photos/show/#rc.Photo.getphotoID()#");
+				event.renderData(data=rc.audio,type=rc.format,location="/audios/show/#rc.audio.getaudioID()#");
 				break;
 			}
 			// HTML
 			default:{
 				// Show a nice messagebox
-				getplugin("MessageBox").info("Photo Created!");
+				getplugin("MessageBox").info("audio Created!");
 				// Redirect to listing
-				setNextEvent('explorer.photos');
+				setNextEvent('explorer.audios');
 			}
 		}
 	}
@@ -119,7 +119,7 @@ component{
 	function delete(event,rc,prc){
 
 		// Delete record by ID
-		var removed = photoService.deleteById( rc.photoID );
+		var removed = audioService.deleteById( rc.audioID );
 
 		// RESTful Handler
 		switch(rc.format){
@@ -132,9 +132,9 @@ component{
 			// HTML
 			default:{
 				// Show a nice messagebox
-				getplugin("MessageBox").warn("Photo Poofed!");
+				getplugin("MessageBox").warn("audio Poofed!");
 				// Redirect to listing
-				setNextEvent('Photos');
+				setNextEvent('audios');
 			}
 		}
 	}

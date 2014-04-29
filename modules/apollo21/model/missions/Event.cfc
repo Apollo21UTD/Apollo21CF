@@ -1,19 +1,20 @@
 /**
 * A cool Photo entity
 */
-component persistent="true" table="texts"{
+component persistent="true" table="events"{
 
 	// Primary Key
-	property name="textID" fieldtype="id" column="textID" generator="native";
+	property name="eventID" fieldtype="id" column="eventID" generator="native";
 
 	// Properties
+	property name="metStart" ormtype="integer";
+	property name="metFinish" ormtype="integer";
 	property name="description" ormtype="string";
-	property name="filePath" ormtype="string";
-	property name="fileSize" ormtype="integer";
-	property name="url" ormtype="string";
-	property name="met" ormtype="integer";
 	property name="createdDate" ormtype="timestamp";
 
+	// many-to-one
+	property name="mission" fkcolumn="missionID" fieldtype="many-to-one" cfc="Mission";
+	//property name="missionID" ormtype="integer";
 
 	// Validation
 	this.constraints = {
@@ -39,8 +40,12 @@ component persistent="true" table="texts"{
 
 			145:44:58
 		*/
+		if (arguments.met EQ 0 or isNull(arguments.met))
+			return "00:00:00";
+
 		var total = arguments.met;
-		var hours = int(total/3600); // 145
+
+		var hours = int(total / 3600); // 145
 		total = ( (total/3600) - int(total/3600) ) * 60; // 44.9666664
 		var minutes = int(total); // 44
 		total = ( total - int(total) ) * 60; // 57.999984

@@ -28,7 +28,8 @@ component {
 
 		// SES Routes
 		routes = [
-			{pattern="/", handler="main", action="index" }
+			{pattern="/", handler="main", action="index" },
+			{pattern="/:handler/:action?"}
 		];
 
 		// Interceptors
@@ -44,6 +45,8 @@ component {
 		binder.map("VideoService@apollo21").to("apollo21.model.video.VideoService");
 		binder.map("AudioService@apollo21").to("apollo21.model.audio.AudioService");
 		binder.map("TextService@apollo21").to("apollo21.model.text.TextService");
+		binder.map("MissionService@apollo21").to("apollo21.model.missions.MissionService");
+		binder.map("EventService@apollo21").to("apollo21.model.missions.EventService");
 
 	}
 

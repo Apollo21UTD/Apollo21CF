@@ -1,11 +1,11 @@
 <cfoutput>
-<h1>Photos</h1>
+<h1>Texts</h1>
 
 <!--- MessageBox --->
 #getPlugin("MessageBox").renderIt()#
 
 <!--- Create Button --->
-#html.href(href="explorer.photos.new", text="Create Photo", class="btn btn-primary")#
+#html.href(href="explorer.texts.new", text="Create Text", class="btn btn-primary")#
 #html.br(2)#
 
 <!--- Listing --->
@@ -14,11 +14,8 @@
 	<thead>
 		<tr>
 
+
 			<th>description</th>
-
-
-
-			<th>type</th>
 
 
 
@@ -38,10 +35,6 @@
 
 
 
-			<th>offset</th>
-
-
-
 			<th>createdDate</th>
 
 
@@ -49,15 +42,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		<cfloop array="#rc.Photos#" index="thisRecord">
+		<cfloop array="#rc.texts#" index="thisRecord">
 		<tr>
 
 
+
 					<td>#thisRecord.getDescription()#</td>
-
-
-
-					<td>#thisRecord.getPhotoType()#</td>
 
 
 
@@ -77,19 +67,15 @@
 
 
 
-					<td>#thisRecord.getOffset()#</td>
-
-
-
 					<td>#thisRecord.getcreatedDate()#</td>
 
 
 
 			<td>
-				#html.startForm(action="explorer.photos.delete")#
-					#html.hiddenField(name="photoID", bind=thisRecord)#
+				#html.startForm(action="explorer.texts.delete")#
+					#html.hiddenField(name="textID", bind=thisRecord)#
 					#html.submitButton(value="Delete", onclick="return confirm('Really Delete Record?')", class="btn btn-danger")#
-					#html.href(href="explorer.photos.edit", queryString="photoID=#thisRecord.getphotoID()#", text="Edit", class="btn btn-info")#
+					#html.href(href="explorer.texts.edit", queryString="textID=#thisRecord.getTextID()#", text="Edit", class="btn btn-info")#
 				#html.endForm()#
 			</td>
 		</tr>

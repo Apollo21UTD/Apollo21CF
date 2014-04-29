@@ -1,0 +1,1 @@
+<cfoutput>#renderView(view="events/editor",args={title="Update Event"})#</cfoutput>

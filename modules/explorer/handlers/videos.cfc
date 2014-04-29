@@ -1,11 +1,11 @@
 /**
-* Manage Photos
+* Manage videos
 * It will be your responsibility to fine tune this template, add validations, try/catch blocks, logging, etc.
 */
 component{
 
 	// DI Virtual Entity Service
-	property name="photoService" inject="PhotoService@apollo21";
+	property name="videoService" inject="VideoService@apollo21";
 
 	// HTTP Method Security
 	this.allowedMethods = {
@@ -23,19 +23,19 @@ component{
 	* Listing
 	*/
 	function index(event,rc,prc){
-		// Get all Photos
-		rc.Photos = photoService.getAll();
+		// Get all videos
+		rc.videos = videoService.getAll();
 
 		// RESTful Switch
 		switch(rc.format){
 			// xml,json,jsont,wddx are by default.  Add your own or remove
 			case "xml" : case "json" : case "jsont" : case "wddx" :{
-				event.renderData(data=rc.Photos,type=rc.format);
+				event.renderData(data=rc.videos,type=rc.format);
 				break;
 			}
 			// HTML
 			default:{
-				event.setView("Photos/index");
+				event.setView("videos/index");
 			}
 		}
 	}
@@ -45,10 +45,10 @@ component{
 	*/
 	function new(event,rc,prc){
 
-		// get new Photo
-		rc.Photo = photoService.new();
+		// get new video
+		rc.video = videoService.new();
 
-		event.setView("Photos/new");
+		event.setView("videos/new");
 	}
 
 	/**
@@ -56,29 +56,29 @@ component{
 	*/
 	function edit(event,rc,prc){
 
-		// get persisted Photo
-		rc.Photo = photoService.get( rc.photoID );
+		// get persisted video
+		rc.video = videoService.get( rc.videoID );
 
-		event.setView("Photos/edit");
+		event.setView("videos/edit");
 	}
 
 	/**
-	* View Photo mostly used for RESTful services only.
+	* View video mostly used for RESTful services only.
 	*/
 	function show(event,rc,prc){
 
 		// Get requested entity by id
-		rc.Photo = photoService.get( rc.photoID );
+		rc.video = videoService.get( rc.videoID );
 
 		switch(rc.format){
 			// xml,json,jsont,wddx are by default.  Add your own or remove
 			case "xml" : case "json" : case "jsont" : case "wddx" :{
-				event.renderData(data=rc.Photo,type=rc.format);
+				event.renderData(data=rc.video,type=rc.format);
 				break;
 			}
 			// HTML
 			default:{
-				setNextEvent('explorer.photos');
+				setNextEvent('explorer.videos');
 			}
 		}
 	}
@@ -88,27 +88,27 @@ component{
 	*/
 	function save(event,rc,prc){
 
-		// get Photo to persist or update and populate it with incoming form
-		rc.Photo = populateModel(model=photoService.get( rc.photoID ),exclude="photoID");
+		// get video to persist or update and populate it with incoming form
+		rc.video = populateModel(model=videoService.get( rc.videoID ),exclude="videoID");
 
 		// Do your validations here
 
 		// Save it
-		photoService.save( rc.Photo );
+		videoService.save( rc.video );
 
 		// RESTful Handler
 		switch(rc.format){
 			// xml,json,jsont,wddx are by default.  Add your own or remove
 			case "xml" : case "json" : case "jsont" : case "wddx" :{
-				event.renderData(data=rc.Photo,type=rc.format,location="/Photos/show/#rc.Photo.getphotoID()#");
+				event.renderData(data=rc.video,type=rc.format,location="/videos/show/#rc.video.getvideoID()#");
 				break;
 			}
 			// HTML
 			default:{
 				// Show a nice messagebox
-				getplugin("MessageBox").info("Photo Created!");
+				getplugin("MessageBox").info("video Created!");
 				// Redirect to listing
-				setNextEvent('explorer.photos');
+				setNextEvent('explorer.videos');
 			}
 		}
 	}
@@ -119,7 +119,7 @@ component{
 	function delete(event,rc,prc){
 
 		// Delete record by ID
-		var removed = photoService.deleteById( rc.photoID );
+		var removed = videoService.deleteById( rc.videoID );
 
 		// RESTful Handler
 		switch(rc.format){
@@ -132,9 +132,9 @@ component{
 			// HTML
 			default:{
 				// Show a nice messagebox
-				getplugin("MessageBox").warn("Photo Poofed!");
+				getplugin("MessageBox").warn("video Poofed!");
 				// Redirect to listing
-				setNextEvent('Photos');
+				setNextEvent('videos');
 			}
 		}
 	}

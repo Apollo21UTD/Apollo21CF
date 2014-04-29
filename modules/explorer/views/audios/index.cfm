@@ -1,11 +1,11 @@
 <cfoutput>
-<h1>Photos</h1>
+<h1>Audios</h1>
 
 <!--- MessageBox --->
 #getPlugin("MessageBox").renderIt()#
 
 <!--- Create Button --->
-#html.href(href="explorer.photos.new", text="Create Photo", class="btn btn-primary")#
+#html.href(href="explorer.audios.new", text="Create Audio", class="btn btn-primary")#
 #html.br(2)#
 
 <!--- Listing --->
@@ -15,10 +15,6 @@
 		<tr>
 
 			<th>description</th>
-
-
-
-			<th>type</th>
 
 
 
@@ -38,7 +34,7 @@
 
 
 
-			<th>offset</th>
+			<th>length</th>
 
 
 
@@ -49,15 +45,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<cfloop array="#rc.Photos#" index="thisRecord">
+		<cfloop array="#rc.audios#" index="thisRecord">
 		<tr>
 
 
 					<td>#thisRecord.getDescription()#</td>
-
-
-
-					<td>#thisRecord.getPhotoType()#</td>
 
 
 
@@ -77,7 +69,7 @@
 
 
 
-					<td>#thisRecord.getOffset()#</td>
+					<td>#thisRecord.getLength()#</td>
 
 
 
@@ -86,10 +78,10 @@
 
 
 			<td>
-				#html.startForm(action="explorer.photos.delete")#
-					#html.hiddenField(name="photoID", bind=thisRecord)#
+				#html.startForm(action="explorer.audios.delete")#
+					#html.hiddenField(name="audioID", bind=thisRecord)#
 					#html.submitButton(value="Delete", onclick="return confirm('Really Delete Record?')", class="btn btn-danger")#
-					#html.href(href="explorer.photos.edit", queryString="photoID=#thisRecord.getphotoID()#", text="Edit", class="btn btn-info")#
+					#html.href(href="explorer.audios.edit", queryString="audioID=#thisRecord.getaudioID()#", text="Edit", class="btn btn-info")#
 				#html.endForm()#
 			</td>
 		</tr>
