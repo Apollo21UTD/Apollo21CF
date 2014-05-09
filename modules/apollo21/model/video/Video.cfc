@@ -15,6 +15,9 @@ component persistent="true" table="videos"{
 	property name="length" ormtype="integer";
 	property name="createdDate" ormtype="timestamp";
 
+	// many-to-one
+	property name="mission" fkcolumn="missionID" fieldtype="many-to-one" cfc="Mission";
+
 
 	// Validation
 	this.constraints = {

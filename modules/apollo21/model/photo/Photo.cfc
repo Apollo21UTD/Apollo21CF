@@ -16,6 +16,9 @@ component persistent="true" table="photos"{
 	property name="offset" ormtype="integer";
 	property name="createdDate" ormtype="timestamp";
 
+	// many-to-one
+	property name="mission" fkcolumn="missionID" fieldtype="many-to-one" cfc="Mission";
+
 
 	// Validation
 	this.constraints = {

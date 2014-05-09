@@ -1,13 +1,13 @@
 /*
-	I am a handler (also commonly known as a handler)!
+	I am a handler (also commonly known as a controller)!
 	All web requests are piped through me based on an event
 	Events are defined through the URL in the web browser
-	    ex: localhost:8081/Apollo21/explorer/demo/playground
-							|       |         |    |
-							|       |         |    | The "function". Also synonomous with an "action"
-							|       |         |The "handler" (or "controller")
-							|       | The module (modules are just logical division of code to promote good modularity and flexibility)
-							| Webroot of our application
+	    ex: localhost:8081/explorer/demo/playground
+						     |       |     |
+					         |       |     | The "function". Also synonomous with an "action"
+				 	         |       |The "handler" (or "controller")
+					         |The module (modules are just logical division of code to promote good modularity and flexibility)
+
 		The whole URL together makes up our event. Sometimes a single action might call another action. In that case our event would execute multiple actions
 */
 component {

@@ -28,3 +28,7 @@ Thumbs.db
 # Eclipse generated files #
 ###########################
 /settings.xml
+
+# Specific data files #
+#########################
+/modules/apollo21/includes/video/15

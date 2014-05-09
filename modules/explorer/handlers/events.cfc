@@ -4,9 +4,11 @@
 */
 component{
 
-	// DI Virtual Entity Service
+	// Dependancy Injection
 	property name="eventService" inject="EventService@apollo21";
 	property name="photoService" inject="PhotoService@apollo21";
+	property name="missionService" inject="MissionService@apollo21";
+	property name="videoService" inject="VideoService@apollo21";
 
 	// HTTP Method Security
 	this.allowedMethods = {
@@ -141,15 +143,19 @@ component{
 	}
 
 	/**
-	* THe name of the function and the first argument are completely unrelated
+	* The name of the function and the first argument are completely unrelated
 	*/
 	function eventDemo(event,rc,prc)
 	{
-		// Hardcoded for demo
-		rc.missionNum = 14;
+		// param the missionNum so it knows what content to load the first time. Note: this paraValue() function automatically puts the variable in the rc scope
+		event.paramValue("missionNum", 15);
+		// Use getAll to get all the missions. We'll loop over the returned array inside the view file.
+		prc.missions = missionService.getAll(sortOrder="missionNum");
 
+		// I use the CritiaBuilder below to create the query. CriteriaBuilder allows you to create more complex queries including joins (aka alias's)
 		var c = eventService.newCriteria();
-		c.isEQ("missionID", javaCast( "int", rc.missionNum) )
+		c.createAlias("mission", "m", c.INNER_JOIN)
+			.isEQ("m.missionID", javaCast( "int", rc.missionNum) )
 			.order("metStart", "asc");
 		prc.events = c.list();
 
@@ -157,11 +163,24 @@ component{
 
 	function exploreEvent(event,rc,prc)
 	{
+		rc.missionNum = rc.mission;
+
 		prc.event = eventService.get(id=rc.eventID);
 
+		// Get the photos
 		var c = photoService.newCriteria();
-		c.between("met", javaCast("int", prc.event.getMetStart()), javaCast("int", prc.event.getMetFinish()));
+		c.createAlias("mission", "m", c.INNER_JOIN)
+			.isEQ( "m.missionID", javaCast("int", rc.missionNum) )
+			.between("met", javaCast("int", prc.event.getMetStart()), javaCast("int", prc.event.getMetFinish()));
 		prc.photos = c.list();
+
+		// Get the videos
+		var c = videoService.newCriteria();
+		c.createAlias("mission", "m", c.INNER_JOIN)
+			.isEQ( "m.missionID", javaCast("int", rc.missionNum) )
+			.between("met", javaCast("int", prc.event.getMetStart()), javaCast("int", prc.event.getMetFinish()));
+		prc.videos = c.list();
+
 		/*writeDump(prc.event.getMetStart());
 		writeDump(prc.event.getMetFinish());
 		writeDump(var=prc.photos ,abort=true); // benswritedump*/

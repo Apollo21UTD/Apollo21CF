@@ -1,14 +1,22 @@
 <cfoutput>
-	<select class="clearfix" name="missionNum" style="float:left;">
-		<option value=14>Apollo 14</option>
-	</select>
-
+	#html.startForm(action="explorer.events.eventDemo")#
+		<select class="clearfix" name="missionNum" style="float:left;">
+			<cfloop array="#prc.missions#" index="item">
+				<option value="#item.getMissionNum()#"
+					<cfif item.getMissionNum() EQ rc.missionNum>selected="true"</cfif>
+					>
+					#item.getDescription()#
+				</option>
+			</cfloop>
+		</select>
+		#html.submitButton(value="Submit", class="btn btn-submit")#
+	#html.endForm()#
 
 	<cfloop array="#prc.events#" index="thisEvent">
 		<div style="height:200px; width:200px;border: 1px solid gray;border-radius: 4px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055); padding:10px; display:inline-block; position:relative; float:left;" >
 			<h3>#thisEvent.getDescription()#</h3>
 			<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-	           #html.href(href="explorer.events.exploreEvent", queryString="eventID=#thisEvent.getEventID()#", text="Explore", class="btn btn-info")#
+	           #html.href(href="explorer.events.exploreEvent", queryString="mission=#rc.missionNum#&eventID=#thisEvent.getEventID()#", text="Explore", class="btn btn-info")#
 		</div>
 		<!---<div class="col-sm-6 col-md-4" style="width:200px;">
 	        <div class="thumbnail">

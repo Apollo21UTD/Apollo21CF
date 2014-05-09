@@ -16,6 +16,7 @@
 
 	<!---
 		Parse through an "events.txt" file and create corresponding records in the db
+		Note: You need to run the "metFinish()" to write the correct metFinish value to each record
 	 --->
 	<cffunction name="importEvents">
 		<cfargument name="event">
@@ -24,8 +25,8 @@
 
 		<cfscript>
 			// These values could be aquired from an HTML form
-			rc.filePath = "/Users/benknox/Downloads/a14/lists/events.txt";
-			rc.missionNum = 14;
+			rc.filePath = "/Users/benknox/Downloads/a15/lists/events.txt";
+			rc.missionNum = 15;
 
 			//Create a query object for later
 			var q = new Query();
@@ -65,7 +66,7 @@
 								(
 								" & metInSeconds & ",
 								'" & trim(tokens[1]) & "',
-								(select missionID from mission where missionNum = " & rc.missionNum & "),
+								(select missionID from missions where missionNum = " & rc.missionNum & "),
 								now())";
 					q.setSQL(sql);
 					q.execute();
@@ -96,9 +97,9 @@
 		<cfscript>
 			// I essentially just changed this file path for each individual photo.txt
 			// Ideally it could be written to process a batch of them all at once
-			rc.filePath = "/Users/benknox/Downloads/a14/lists/lmpphotos.txt";
-			rc.missionNum = 14;
-			rc.photoType = "lmp";
+			rc.filePath = "/Users/benknox/Downloads/a15/lists/cdrphotos.txt";
+			rc.missionNum = 15;
+			rc.photoType = "cdr";
 
 			//Create a query object for later
 			var q = new Query();
@@ -143,8 +144,9 @@
 					/*Create the SQL string, and insert the data*/
 					var sql = "INSERT INTO photos
 								(
+								`missionID`,
 								`description`,
-								`type`,
+								`photoType`,
 								`filePath`,
 								`fileSize`,
 								`url`,
@@ -153,6 +155,7 @@
 								`createdDate`)
 								VALUES
 								(
+								'" & rc.missionNum & "',
 								'" & trim(tokens[1]) & "',
 								'" & rc.photoType & "',
 								'modules/apollo21/includes/photo/" & rc.missionNum & "/" & trim(tokens[1]) & "',
@@ -186,7 +189,8 @@
 		<cfargument name="rc">
 		<cfargument name="prc">
 
-		<cfset rc.photoType = "lmp">
+		<cfset rc.photoType = "cdr">
+		<cfset rc.missionNum = 15>
 		<!---
 			Note the "order by met desc". That means we will be looping from largest to smallest
 		 --->
@@ -197,8 +201,9 @@
 			  FROM photos
 			  GROUP BY met
 			  ) some_table USING (met, photoID)
-			where photoType = '#rc.photoType#'
-			order by met desc;
+			WHERE photoType = '#rc.photoType#'
+			AND missionID = '#rc.missionNum#'
+			ORDER BY met desc;
 		</cfquery>
 
 		<cfset var previousMET = 0>
@@ -214,6 +219,7 @@
 				UPDATE photos
 				SET offset = #previousMET# - #met#
 				WHERE met = #met#
+				AND missionID = '#rc.missionNum#'
 				AND photoType = '#rc.photoType#'
 			</cfquery>
 
@@ -230,9 +236,11 @@
 		<cfargument name="rc">
 		<cfargument name="prc">
 
+		<cfset rc.missionNum = 15>
+
 		<cfquery name="q" datasource="apollo21DB">
 			SELECT * FROM events
-			WHERE missionID = 14
+			WHERE missionID = #rc.missionNum#
 			ORDER BY metStart desc
 		</cfquery>
 
@@ -242,10 +250,96 @@
 				UPDATE events
 				SET metFinish = #previousMet#
 				WHERE eventID = #eventID#
+				AND missionID = #rc.missionNum#
 			</cfquery>
 
 			<cfset previousMET = #metStart#>
 		</cfoutput>
+
+		<cfset event.setView("import/success")>
+	</cffunction>
+
+
+	<cffunction name="importVideos">
+		<cfargument name="event">
+		<cfargument name="rc">
+		<cfargument name="prc">
+		<cfscript>
+			// I essentially just changed this file path for each individual photo.txt
+			// Ideally it could be written to process a batch of them all at once
+			rc.filePath = "/Users/benknox/Downloads/a15/lists/video.txt";
+			rc.missionNum = 15;
+
+			//Create a query object for later
+			var q = new Query();
+			q.setDatasource("apollo21DB");
+
+			/*Reading a file can be done natively in CF, but I am using actual java objects because its a little bit more efficient*/
+			//Create java FileReader
+			fileReader = createObject("java", "java.io.FileReader").init(rc.filePath);
+			//Create java BufferedReader
+			reader = createObject("java", "java.io.BufferedReader").init(fileReader);
+
+			/*CFScript doesn't let us do assignments in a condition statement... so I have to get a little funky here... just read it through and it'll make sense*/
+			var line = reader.readLine();
+			if ( !isNull(line) )
+			{
+				// Keep track of the previous met
+				var previousMET = "";
+				do
+				{
+					/*Parse the line, then we'll create our SQL string*/
+					var tokens = listToArray(list=line, delimiters=" ");
+
+					/*
+					array index...
+					1 = start met
+					2 = end met
+					3 = file name
+					*/
+
+					// We only care about the mpg files
+					if ( right( trim(tokens[3]), 3 ) EQ "mpg" )
+					{
+						// Convert MET to seconds. Met = hhh:mm:ss
+						var met = listToArray(list=trim(tokens[2]), delimiters=":");
+						// Hours to seconds
+						var metInSeconds = met[1] * 3600;
+						// Minutes to seconds
+						metInSeconds += met[2] * 60;
+						metInSeconds += met[3];
+
+
+						// I converted all the videos from mpg to mp4 (cause html natively plays mp4). So we have to change the file extensions
+						tokens[3] = replace( trim(tokens[3]), "mpg", "mp4" );
+						/*Create the SQL string, and insert the data*/
+						var sql = "INSERT INTO videos
+									(
+									`missionID`,
+									`description`,
+									`filePath`,
+									`met`,
+									`createdDate`)
+									VALUES
+									(
+									'" & rc.missionNum & "',
+									'" & trim(tokens[3]) & "',
+									'modules/apollo21/includes/video/" & rc.missionNum & "/" & trim(tokens[3]) & "',
+									'" & metInSeconds & "',
+									now())";
+
+						q.setSQL(sql);
+						q.execute();
+					}
+
+					//Get the next line... rinse and repeat
+					line = reader.readLine();
+				}
+				while ( !isNull(line) );
+			}
+
+			event.setView("import/success");
+		</cfscript>
 	</cffunction>
 
 	<cffunction name="scribble">
