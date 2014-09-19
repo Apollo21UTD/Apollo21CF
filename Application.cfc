@@ -1,4 +1,5 @@
 ﻿<!---/**
+
 * This is the bootstrapper Application.cfc for ColdBox Applications.
 * It uses inheritance on the CFC, so if you do not want inheritance
 * then use the Application_noinheritance.cfc instead.
