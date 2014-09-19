@@ -1,5 +1,4 @@
 ﻿/**
-
 *
 * Base remote handler for the platform. Should be extended by remote handlers within modules for standard marshaling of data and error handling.
 */
