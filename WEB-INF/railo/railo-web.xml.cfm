@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><railo-configuration pw="573db0b689e2f4291f477cd5ff9103a381a9748ba3bdb4451a144a5ae923ba07" version="2.0"><cfabort/>
+<?xml version="1.0" encoding="UTF-8"?><railo-configuration password="37f95012a8863bf3ca948202e4004a7528cfe14d8645289b" version="2.0"><cfabort/>
 
 <!-- 
 Path placeholders:
@@ -31,7 +31,7 @@ Path placeholders:
 <!--	or ask your database distributor 																-->
 
 	<data-sources>
-	<data-source allow="511" blob="false" class="org.gjt.mm.mysql.Driver" clob="false" connectionTimeout="1" custom="useUnicode=true&amp;characterEncoding=UTF-8&amp;useLegacyDatetimeCode=true" database="apollo21DB" dbdriver="MySQL" dsn="jdbc:mysql://{host}:{port}/{database}" host="localhost" metaCacheTimeout="60000" name="apollo21DB" port="3306" storage="false" username="root" validate="false"/></data-sources>
+	</data-sources>
 	
 	<resources>
     	<!--
